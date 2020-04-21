@@ -3,7 +3,7 @@ import sys
 import pygame
 
 from settings import Settings
-
+from ship import Ship
 
 class AlienInvasion:
     """overall class to manage games assets and behaviour"""
@@ -16,6 +16,7 @@ class AlienInvasion:
                                                self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
         #self.bg_color = (230, 230, 230)
+        self.ship = Ship(self)
 
     def run_game(self):
         """main loop for the game"""
@@ -25,6 +26,7 @@ class AlienInvasion:
                     sys.exit()
 
             self.screen.fill(self.settings.bg_color)
+            self.ship.draw_ship()
             pygame.display.flip()
 
 
