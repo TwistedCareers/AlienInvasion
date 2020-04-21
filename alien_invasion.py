@@ -1,4 +1,4 @@
-"""AlienInvasion Class"""
+""" AlienInvasion Class """
 import sys
 import pygame
 
@@ -15,7 +15,6 @@ class AlienInvasion:
         self.screen = pygame.display.set_mode((self.settings.screen_width,
                                                self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
-        #self.bg_color = (230, 230, 230)
         self.ship = Ship(self)
 
     def run_game(self):

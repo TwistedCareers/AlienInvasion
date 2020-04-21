@@ -1,4 +1,4 @@
-"""ship class"""
+""" ship class """
 import pygame
 
 
