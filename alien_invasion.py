@@ -8,6 +8,7 @@ from bullet import Bullet
 
 from alien import Alien
 
+
 class AlienInvasion:
     """overall class to manage games assets and behaviour"""
 
@@ -34,8 +35,28 @@ class AlienInvasion:
 
     def _create_fleet(self):
         """Create the fleet of aliens"""
-        #Make an alien
+        # Make an alien
         alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
+        available_space_x = self.settings.screen_width - (2 * alien_width)
+        number_aliens_x = available_space_x // (2 * alien_width)
+
+        #Determine the number of rows of aliens that fit on the screen
+        ship_height = self.ship.image_rect.height
+        available_space_y = (self.settings.screen_height - (3 * alien_height) - ship_height)
+        number_rows = available_space_y // (2 * alien_height)
+
+        for row_number in range(number_rows):
+            for alien_number in range(number_aliens_x):
+                self._create_alien(alien_number, row_number)
+
+    def _create_alien(self, alien_number, row_number):
+        """Create an alien and place it in the row"""
+        alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
+        alien.pos_x = alien_width + 2 * alien_width * alien_number
+        alien.rect.x = alien.pos_x
+        alien.rect.y = alien_height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
 
     def _check_events(self):
@@ -72,14 +93,13 @@ class AlienInvasion:
 
     def _update_bullets(self):
         """Update position of bullets and get rid of old bullets"""
-        #update the bullet positions
+        # update the bullet positions
         self.bullets.update()
 
-        #get rid of bullets that have disappeared
+        # get rid of bullets that have disappeared
         for bullet in self.bullets.copy():
             if bullet.bullet_rect.bottom <= 0:
                 self.bullets.remove(bullet)
-
 
     def _update_screen(self):
         """Update images on screen, and flip to new screen"""
