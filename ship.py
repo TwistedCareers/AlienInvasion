@@ -12,19 +12,24 @@ class Ship:
         self.screen = ai_game.screen
         self.screen_rect = ai_game.screen.get_rect()
         self.image = pygame.image.load('images/spaceship.png')
-        self.image_rect = self.image.get_rect()
-        self.image_rect.midbottom = self.screen_rect.midbottom
+        self.rect = self.image.get_rect()
+        self.rect.midbottom = self.screen_rect.midbottom
         self.settings = ai_game.settings
-        self.x_pos = float(self.image_rect.x)
+        self.x_pos = float(self.rect.x)
 
     def draw_ship(self):
         """Draw the ship at its current location."""
-        self.screen.blit(self.image, self.image_rect)
+        self.screen.blit(self.image, self.rect)
 
     def update(self):
         """Update the ship's position based on the movement flag."""
-        if self.moving_right and self.image_rect.right < self.screen_rect.right:
+        if self.moving_right and self.rect.right < self.screen_rect.right:
             self.x_pos += self.settings.ship_speed
-        if self.moving_left and self.image_rect.left > 0:
+        if self.moving_left and self.rect.left > 0:
             self.x_pos -= self.settings.ship_speed
-        self.image_rect.x = self.x_pos
+        self.rect.x = self.x_pos
+
+    def center_ship(self):
+        """Center the ship on the screen"""
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x_pos = float(self.rect.x)
